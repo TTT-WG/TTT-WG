@@ -1,0 +1,121 @@
+Token Trust and Traceability, Meeting 2
+===
+*12th September 2023*
+
+Attending: Matt, Linda, Maarten, Andrew McNab (DUNE hat), Tom D, David C (for first half)
+Apologies: DaveK, Hannah
+
+Disclaimer: Due to technical difficulties these minutes may not be as true a representation of proceedings as we'd like. Please feel free to raise any issues with Matt.
+
+Actions and Minutes from the first meeting
+===
+First meeting link: https://indico.cern.ch/event/1303454/ 
+WG was set up, second meeting arranged. twiki page exists (thanks to Maarten) but is sparse (no thanks to me):
+https://twiki.cern.ch/twiki/bin/view/LCG/WLCGTokenTrustTraceability
+
+Collaborating with the wider AuthZ group and Beyond
+===
+Noted last meeting the attendence was EU-centric. Suggestions for U.S. contributors?
+ - Andrew from DUNE is a good start
+ - SKA being prodded.
+
+The topic of traceability (groups) has come up in the last few AuthZ meetings, we want to avoid duplicating effort (and conversations).
+
+SKAO were mentioned as having valuable experience in this area and should be approached. Propose as an action (on Matt, unless anyone has their own contacts they'd like to prod).
+
+"Advertisement" - advertise WG existence at GDB/WLCG Ops Coordination.
+-Matt can ask for a few-minute slot at this month's WLCG Ops Coord meeting on Thursday.
+-Maarten will advertise at GDB tomorrow.
+-Matt will present a single slide at WLCG Ops 
+
+-DC mentions getting more EGI representation too
+
+-ML we will want to form what the WG scope is before we can others to commit 
+-DC - Tom and I are in TechEx next week, can mention this there
+-ML notes philosphical differences between OSG and EGI in the past. Less effort so they need to be more careful with what they commit to.
+-ML - one of the take homes from last meeting was the idea of extensive "manuals" that could benefit all.
+
+
+(at this point codimd fell over and Matt had to fall back to pencil and paper for notes - my apologies for the loss of detail from decrypting my terrible handwriting after the fact)
+---
+"goal of parsing needs, particular w.r.t. incident response"
+
+-DC notes good involvement with AEGIS
+
+-ML sites dealing with mulitple entities, benefit from a description of token flows. Incident Reponse basics not dissimilar across communities.
+
+Token Traceability: Forming Recommendations 
+===
+[The former T&I WG recommendations from 4 years ago hold very true.](https://indico.cern.ch/event/739880/contributions/3470862/attachments/1876966/3093414/WLCG_Traceability_and_Isolation_WG__recommendations.pdf)
+
+The token traceabilty requirements are, IMO, basically no different from the split traceability requirements from the above (to quote):
+"
+* Sites MUST be able to trace activity on their systems (worker node, hypervisor, ...),
+to a job issued by a VO. In particular:
+○ Given a time and IP address, identify the corresponding VOs and job IDs.
+○ Given a time, IP address and specific activity, uniquely identify the
+corresponding VO and job ID.
+○ Given a time period and VO (potentially with job IDs), identify the
+corresponding IP addresses.
+* VOs MUST be able to trace the activity within their pilot framework. In particular:
+○ Given a time and IP address, identify the corresponding users and payloads.
+○ Given a time, IP address and job ID, uniquely identify the corresponding user
+payload.
+○ Given a time and user, identify all pilot jobs that executed payloads
+submitted by that user.
+
+"
+
+-Discussion, Noted that tokens improve this, secure credential of sensible scopes - no all powerful proxy. 
+-ML need to maintain this advantage - no wildcard audiances or tokens with all the scopes.
+Jobs less powerful by construction.
+-AM notes that DUNE users don't see tokens, these are handed out behind the scenes to pilots etc for, e.g., accessing rucio endpoints.
+
+-AM noted that there's a use case slightly different from the above, common in the U.S. (DUNE etc), where a Third Party runs the pilot factory. This is also common in the EU (the UK/EGI DIRACs).
+
+-discussion on the previous WG
+-possible de-emphasis on traceability (?).
+-focus instead on other aspects of incident response.
+-noted case from 3rd party job submissions systems where something like batchid is hard to find (no comms with the batch system), but an identifier like IP is easier to get hold of.
+-3rd party submissions systems something to explicitly explore
+
+
+Tension between being able to "start afresh" with a cleaner authz system and living with the fact that x509 and tokens will have to coexist for a while. Tokens explicitly contain the information on who requested them
+
+One of the common threads of of recent authz meetings was trust relationship between certificate authorities and how that applies to token issuers.
+
+Then I wrote "internal traceability", but completely forgot the context.
+
+
+Setting Objectives (for that single slide)
+===
+* Main Output will be Documentation: Token Workflow, Forensics of the Token Workflow. Incident Response with Tokens.
+* Policy: Risk Assessment Trust principles for the "token (and federated indentity) age". Best Practice. 
+* Note that the other half of this is Federated Identities - this is how we'll trace the users.
+
+Reminder that "No user should need to know about tokens" - all they need to do is the single sign on they used.
+But people like us need to be able to look under the hood.
+
+AM - note we should emphasis the federated identity side of the coin too. But we won't focus on that.
+
+Wrap Up, Next Meeting
+===
+
+Suggestion: Rather then have repeated standalone meetings tag on to the regular AuthZ meetings (aiming to have progress at monthly intervels), with standalone TTT meetings as needed?
+    -There may not be the agenda-space, energy or appetite in the AuthZ meetings for this, all fair points.
+    
+Anyone not in the TTT egroup please give Matt a shout
+
+
+-Decision, keep TTT meetings seperate, and ~monthly. Next meeting will be doodle-polled (aim for mid-October), after that look for a regular spot (PM on 4th Thursday of the month suggested as one possibility)
+
+-Linda and Andrew added to TTT egroup.
+
+-Action on Matt to produce "advertisement slide", share with others to be presented by Maarten at the GDB within his Token stack, Matt at Ops Coord this Thursday.
+
+-SOme Things to look at for next meeting:
+* "Documentation wish list"
+* How token issuers and certificate issuer trust relationships "map" to each other.
+
+
+
